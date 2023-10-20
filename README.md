@@ -1,69 +1,39 @@
-# Flask HTML Web & Database Project Starter
+### Chitter App ###
 
-This is a starter project for you to use to start your Flask HTML web & database
-projects.
+https://chitter-app-mc6v.onrender.com/
 
-It contains quite a lot of example code. You can use this to see how the various
-parts of the project work, or you can delete it and start from scratch.
+Note: The database expires 18/01/24.
 
-There are two videos to support:
+This application was built using a starter project during my Makers bootcamp.
+The only significant file supplied was the database_connection.py, which abstracts away a lot of the psycopg methods and functions, but I still needed to adjust it with my own contributions to make this project work online.
 
-* [A demonstration of setting up the project](https://www.youtube.com/watch?v=YStsRfMVx44&t=0s)
-* [A walkthrough of the project codebase](https://www.youtube.com/watch?v=YStsRfMVx44&t=314s) 
+This project was a challenge at the end of one of the modules, bringing together a lot of what I had learned up to that point. I did not use test driven development to build this, as it is supposed to be a prototype. I'd like to revisit this and try build the same (or better) using TDD.
 
-## Setup
+seeds/chitter.sql
+- has my queries for building and inserting some sample data.
 
-```shell
-# Clone the repository to your local machine
-; git clone git@github.com:makersacademy/web-applications-in-python-project-starter-html.git YOUR_PROJECT_NAME
+templates
+- my html pages with jinja templates taking arguments from the server and displaying content from the database.
 
-# Or, if you don't have SSH keys set up
-; git clone https://github.com/makersacademy/web-applications-in-python-project-starter-html.git YOUR_PROJECT_NAME
+lib
+- classes are created for users and posts for easy manipulating when inserting or retrieving from the database.
+- repositories which hold the methods and queries for the database.
 
-# Enter the directory
-; cd YOUR_PROJECT_NAME
+app.py
+- contains all my routes using Flask.
+- I also use session to maintain users who have logged in and secrets to generated a random key for that session.
 
-# Install dependencies and set up the virtual environment
-; pipenv install
-
-# Activate the virtual environment
-; pipenv shell
-
-# Install the virtual browser we will use for testing
-; playwright install
-# If you have problems with the above, contact your coach
-
-# Create a test and development database
-; createdb YOUR_PROJECT_NAME
-; createdb YOUR_PROJECT_NAME_test
-
-# Open lib/database_connection.py and change the database names
-; open lib/database_connection.py
-
-# Seed the development database (ensure you have run `pipenv shell` first)
-; python seed_dev_database.py
-
-# Run the tests (with extra logging)
-; pytest -sv
-
-# Run the app
-; python app.py
-# Now visit http://localhost:5001/emoji in your browser
-```
-
-If you would like to remove the example code:
-
-```shell
-; ./remove_example_code.sh
-```
+Dockerfile
+- used a sample dockerfile to be able to deploy to render.
 
 
-<!-- BEGIN GENERATED SECTION DO NOT EDIT -->
+Learnings:
+There were lots of learnings in the lead up to this project, such as using the repositories, how to use python to interact with the database, seeding data and testing the database.
 
----
+But then there were lots of learnings in the production of this:
+- I had to break down the project into smaller projects. First to understand how the routing works better, then another on how sessions work.
+- encrypting passwords in the database using hashlib.
+- adjusting the database_connection file url for the database and using environment variables to deploy.
 
-**How was this resource?**  
-[😫](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications-in-python-project-starter-html&prefill_File=README.md&prefill_Sentiment=😫) [😕](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications-in-python-project-starter-html&prefill_File=README.md&prefill_Sentiment=😕) [😐](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications-in-python-project-starter-html&prefill_File=README.md&prefill_Sentiment=😐) [🙂](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications-in-python-project-starter-html&prefill_File=README.md&prefill_Sentiment=🙂) [😀](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications-in-python-project-starter-html&prefill_File=README.md&prefill_Sentiment=😀)  
-Click an emoji to tell us.
-
-<!-- END GENERATED SECTION DO NOT EDIT -->
+Challenges:
+- Biggest challenge by far was the cloud deployment, something I thought would be simple. I tried doing it first on Makers in-house system using Exoframe, but with little documentation and guidance, I switched to just using render. I initially tried using their python runtime using build and run commands, but after trying with docker, I had much better success.
