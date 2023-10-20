@@ -11,7 +11,7 @@ from psycopg.rows import dict_row
 # That's why we have provided it!
 class DatabaseConnection:
     # VVV CHANGE BOTH OF THESE VVV
-    DEV_DATABASE_NAME = "chitter_app"
+    DEV_DATABASE_NAME = "chitter"
     TEST_DATABASE_NAME = "chitter_test"
 
     def __init__(self, test_mode=False):
@@ -21,10 +21,17 @@ class DatabaseConnection:
     # to localhost and select the database name given in argument.
     def connect(self):
         try:
-            self.connection = psycopg.connect(
-                os.getenv("DATABASE_URL"),
-                row_factory=dict_row,
-            )
+            if os.environ.get("APP_ENV") == "PRODUCTION":
+                self.connection = psycopg.connect(
+                    os.getenv("DATABASE_URL"),
+                    row_factory=dict_row,
+                )
+            else:
+                self.connection = psycopg.connect(
+                    f"postgresql://localhost/{self._database_name()}",
+                    row_factory=dict_row,
+                )
+                return "postgres://localhost:5432/postgres"
         except psycopg.OperationalError:
             raise Exception(
                 f"Couldn't connect to the database {self._database_name()}! "

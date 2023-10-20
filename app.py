@@ -93,7 +93,7 @@ def post_create():
 # They also start the server configured to use the test database
 # if started in test mode.
 if __name__ == "__main__":
-    app.run(
-        debug=True,  # Optional but useful for now
-        host="0.0.0.0",  # Listen for connections directed _to_ any address
-    )
+    if os.getenv("APP_ENV") == "PRODUCTION":
+        app.run(port=5000, host="0.0.0.0")
+    else:
+        app.run(debug=True, port=5000, host="0.0.0.0")
