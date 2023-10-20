@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/style.css" />
+    <title>Chitter</title>
+  </head>
+  <body>
+    <h1>Chitter</h1>
+
+    {% if session['user_id'] == False %}
+    <div class="navbar">
+      <a href="/login">Login</a>
+      <a href="/create">Create user</a>
+    </div>
+    {% else %}
+    <div class="navbar">
+      <a href="/logout">Logout</a>
+    </div>
+    <form class="post-form" action="/" method="POST">
+      <label for="post">Add a post</label>
+      <div class="post-form-text-submit">
+        <input type="text" name="post" />
+        <input type="submit" value="Add Post" />
+      </div>
+    </form>
+    {% endif %}
+    <div class="posts">
+      {% for post in posts%}
+      <div class="post">
+        <p class="post-header">@ {{post.username}}</p>
+        <p class="post-body">{{post.text}}</p>
+        <div class="post-footer">
+          <p class="post-footer-date">{{post.date}}</p>
+          <p class="post-footer-time">{{post.time}}</p>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </body>
+</html>
