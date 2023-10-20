@@ -21,7 +21,7 @@ class DatabaseConnection:
     # to localhost and select the database name given in argument.
     def connect(self):
         try:
-            if os.environ.get("APP_ENV") == "PRODUCTION":
+            if os.getenv("APP_ENV") == "PRODUCTION":
                 self.connection = psycopg.connect(
                     os.getenv("DATABASE_URL"),
                     row_factory=dict_row,
