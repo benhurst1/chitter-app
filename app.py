@@ -29,7 +29,6 @@ def get_home():
             "/index.html", message=f"Logged in as {session['user_id']}", posts=posts
         )
     return render_template("/index.html", posts=posts)
-    return render_template("/index.html")
 
 
 @app.route("/", methods=["POST"])
